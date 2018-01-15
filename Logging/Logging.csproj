@@ -76,10 +76,6 @@
     <Compile Include="Level.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Message.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
