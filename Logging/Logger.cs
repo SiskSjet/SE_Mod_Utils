@@ -18,7 +18,7 @@ namespace Sisk.Utils.Logging {
         }
 
         /// <inheritdoc />
-        public ILogger ForScope<TScope>() {
+        ILogger ILogger.ForScope<TScope>() {
             var logger = new Logger(typeof(TScope), this);
             _children.Add(logger);
             return logger;
@@ -84,6 +84,15 @@ namespace Sisk.Utils.Logging {
         public IDisposable BeginMethod(string methodName) {
             EnterMethod(methodName);
             return new DisposingContext(this);
+        }
+
+        /// <summary>
+        ///     Create a logger that marks log events as being from the specified source type.
+        /// </summary>
+        /// <typeparam name="TScope">Type generating log messages in the context.</typeparam>
+        /// <returns>A logger that will enrich log events as specified.</returns>
+        public static ILogger ForScope<TScope>() {
+            return new Logger(typeof(TScope));
         }
 
         private void Dispatch(LogEvent logEvent) {
