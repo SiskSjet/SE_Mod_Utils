@@ -80,13 +80,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formatter.cs" />
-    <Compile Include="Handler\ILogHandler.cs" />
-    <Compile Include="Handler\LogHandler.cs" />
-    <Compile Include="Handler\WorldStorageHandler.cs" />
-    <Compile Include="Level.cs" />
+    <Compile Include="LogEventHandler.cs" />
+    <Compile Include="DefaultHandler\WorldStorageHandler.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="ILogHandler.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LogEvent.cs" />
+    <Compile Include="LogEventLevel.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Message.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
