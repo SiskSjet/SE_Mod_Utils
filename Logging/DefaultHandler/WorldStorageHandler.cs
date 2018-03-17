@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Sandbox.ModAPI;
 
-namespace Sisk.Utils.Logging.Handler {
-    public sealed class WorldStorageHandler : LogHandler {
+namespace Sisk.Utils.Logging.DefaultHandler {
+    public sealed class WorldStorageHandler : LogEventHandler, IDisposable {
+        private readonly Queue<LogEvent> _cache = new Queue<LogEvent>();
         private readonly string _fileName;
+        private readonly Formatter _formatter;
         private TextWriter _logWriter;
-        private readonly Queue<Message> _cache;
-        public WorldStorageHandler(string fileName) : this(fileName, Message.DefaultFormatter) { }
+        public WorldStorageHandler(string fileName, LogEventLevel level = LogEventLevel.All) : this(fileName, LogEvent.DefaultFormatter, level) { }
 
-        public WorldStorageHandler(string fileName, Formatter formatter) : base(formatter) {
+        public WorldStorageHandler(string fileName, Formatter formatter, LogEventLevel level = LogEventLevel.All) : base(level) {
             _fileName = fileName;
-            _cache = new Queue<Message>();
+            _formatter = formatter;
         }
 
-        public override void Dispose() {
+        public void Dispose() {
             if (_logWriter != null) {
                 _logWriter.Flush();
                 _logWriter.Close();
@@ -23,9 +25,9 @@ namespace Sisk.Utils.Logging.Handler {
             }
         }
 
-        public override void Enqueue(Message message) {
+        public override void Emit(LogEvent logEvent) {
             lock (_cache) {
-                _cache.Enqueue(message);
+                _cache.Enqueue(logEvent);
 
                 Flush();
             }
@@ -39,8 +41,8 @@ namespace Sisk.Utils.Logging.Handler {
             if (_logWriter != null) {
                 lock (_cache) {
                     while (_cache.Count > 0) {
-                        var msg = _cache.Dequeue();
-                        _logWriter.WriteLine(msg.ApplyFormat(Formatter));
+                        var logEvent = _cache.Dequeue();
+                        _logWriter.WriteLine(logEvent.RenderMessage(_formatter));
                     }
                 }
 
