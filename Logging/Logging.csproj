@@ -84,7 +84,6 @@
     <Compile Include="DefaultHandler\WorldStorageHandler.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ILogHandler.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="LogEvent.cs" />
     <Compile Include="LogEventLevel.cs" />
     <Compile Include="Logger.cs" />
