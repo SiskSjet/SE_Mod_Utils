@@ -3,14 +3,14 @@ using System.IO;
 using Sandbox.ModAPI;
 
 namespace Sisk.Utils.Logging.DefaultHandler {
-    public sealed class WorldStorageHandler : LogEventHandler {
+    public sealed class LocalStorageHandler : LogEventHandler {
         private readonly Queue<LogEvent> _cache = new Queue<LogEvent>();
         private readonly string _fileName;
         private readonly Formatter _formatter;
         private TextWriter _logWriter;
-        public WorldStorageHandler(string fileName, LogEventLevel level = LogEventLevel.All) : this(fileName, LogEvent.DefaultFormatter, level) { }
+        public LocalStorageHandler(string fileName, LogEventLevel level = LogEventLevel.All) : this(fileName, LogEvent.DefaultFormatter, level) { }
 
-        public WorldStorageHandler(string fileName, Formatter formatter, LogEventLevel level = LogEventLevel.All) : base(level) {
+        public LocalStorageHandler(string fileName, Formatter formatter, LogEventLevel level = LogEventLevel.All) : base(level) {
             _fileName = fileName;
             _formatter = formatter;
         }
@@ -35,7 +35,7 @@ namespace Sisk.Utils.Logging.DefaultHandler {
 
         public override void Flush() {
             if (_logWriter == null && MyAPIGateway.Utilities != null) {
-                _logWriter = MyAPIGateway.Utilities.WriteFileInWorldStorage(_fileName, typeof(Logger));
+                _logWriter = MyAPIGateway.Utilities.WriteFileInLocalStorage(_fileName, typeof(Logger));
             }
 
             if (_logWriter != null) {

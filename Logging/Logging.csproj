@@ -80,10 +80,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultHandler\GlobalStorageHandler.cs" />
+    <Compile Include="DefaultHandler\LocalStorageHandler.cs" />
     <Compile Include="LogEventHandler.cs" />
     <Compile Include="DefaultHandler\WorldStorageHandler.cs" />
     <Compile Include="ILogger.cs" />
-    <Compile Include="ILogHandler.cs" />
+    <Compile Include="ILogEventHandler.cs" />
     <Compile Include="LogEvent.cs" />
     <Compile Include="LogEventLevel.cs" />
     <Compile Include="Logger.cs" />

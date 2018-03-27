@@ -21,5 +21,8 @@
         public bool IsEnabled(LogEventLevel level) {
             return (level & Level) != 0;
         }
+
+        /// <inheritdoc />
+        public abstract void Close();
     }
 }
