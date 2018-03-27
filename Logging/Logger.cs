@@ -86,6 +86,17 @@ namespace Sisk.Utils.Logging {
             return new DisposingContext(this);
         }
 
+        /// <inheritdoc />
+        public void Close() {
+            foreach (var logHandler in _logHandlers) {
+                logHandler.Close();
+            }
+
+            foreach (var logger in _children) {
+                logger.Close();
+            }
+        }
+
         /// <summary>
         ///     Create a logger that marks log events as being from the specified source type.
         /// </summary>

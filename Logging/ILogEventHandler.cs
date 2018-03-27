@@ -5,5 +5,6 @@ namespace Sisk.Utils.Logging {
         void Emit(LogEvent logEvent);
         void Flush();
         bool IsEnabled(LogEventLevel level);
+        void Close();
     }
 }

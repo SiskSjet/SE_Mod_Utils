@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Sandbox.ModAPI;
 
 namespace Sisk.Utils.Logging.DefaultHandler {
-    public sealed class WorldStorageHandler : LogEventHandler, IDisposable {
+    public sealed class WorldStorageHandler : LogEventHandler {
         private readonly Queue<LogEvent> _cache = new Queue<LogEvent>();
         private readonly string _fileName;
         private readonly Formatter _formatter;
@@ -16,7 +15,8 @@ namespace Sisk.Utils.Logging.DefaultHandler {
             _formatter = formatter;
         }
 
-        public void Dispose() {
+        /// <inheritdoc />
+        public override void Close() {
             if (_logWriter != null) {
                 _logWriter.Flush();
                 _logWriter.Close();

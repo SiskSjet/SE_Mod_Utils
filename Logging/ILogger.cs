@@ -11,6 +11,11 @@ namespace Sisk.Utils.Logging {
         IDisposable BeginMethod(string methodName);
 
         /// <summary>
+        ///     Close all <see cref="ILogEventHandler" />.
+        /// </summary>
+        void Close();
+
+        /// <summary>
         ///     Write a log event with the <see cref="LogEventLevel.Debug" /> level.
         /// </summary>
         /// <param name="message">Message describing the event.</param>
