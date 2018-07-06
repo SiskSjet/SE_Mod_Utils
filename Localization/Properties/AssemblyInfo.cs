@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // Allgemeine Informationen über eine Assembly werden über die folgenden
@@ -10,12 +9,12 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Localization")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © 2018 Sisk S'jet")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Durch Festlegen von ComVisible auf FALSE werden die Typen in dieser Assembly
-// für COM-Komponenten unsichtbar.  Wenn Sie auf einen Typ in dieser Assembly von
+// Durch Festlegen von ComVisible auf "false" werden die Typen in dieser Assembly unsichtbar 
+// für COM-Komponenten.  Wenn Sie auf einen Typ in dieser Assembly von 
 // COM aus zugreifen müssen, sollten Sie das ComVisible-Attribut für diesen Typ auf "True" festlegen.
 [assembly: ComVisible(false)]
 
