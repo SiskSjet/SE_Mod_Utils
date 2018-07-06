@@ -1,14 +1,14 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-// Allgemeine Informationen über eine Assembly werden über die folgenden
+// Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("Localization")]
+[assembly: AssemblyTitle("Logging")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Localization")]
+[assembly: AssemblyProduct("Logging")]
 [assembly: AssemblyCopyright("Copyright © 2018 Sisk S'jet")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-[assembly: Guid("afc6b29d-80d1-48ab-9b45-7230216c285f")]
+[assembly: Guid("68711e81-8165-48ab-b555-d7084cb7b881")]
 
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //

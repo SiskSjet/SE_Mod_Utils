@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-// ReSharper disable once CheckNamespace
 namespace Sisk.Utils.Logging {
     /// <inheritdoc />
     public class Logger : ILogger {

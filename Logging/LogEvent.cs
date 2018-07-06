@@ -1,6 +1,5 @@
 ﻿using System;
 
-// ReSharper disable once CheckNamespace
 namespace Sisk.Utils.Logging {
     public delegate string Formatter(LogEventLevel level, string message, DateTime timestamp, Type scope, string method);
 

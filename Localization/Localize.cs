@@ -5,7 +5,7 @@ using VRage.Utils;
 
 namespace Sisk.Utils.Localization {
     /// <summary>
-    /// A static class used to localize strings.
+    ///     A static class used to localize strings.
     /// </summary>
     public static class Localize {
         private static readonly Dictionary<string, LocalizationItem> Localization = new Dictionary<string, LocalizationItem>();
