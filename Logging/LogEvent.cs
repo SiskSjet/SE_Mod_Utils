@@ -54,7 +54,7 @@ namespace Sisk.Utils.Logging {
         /// <param name="formatter">The formatter used to render the message.</param>
         /// <returns></returns>
         public string RenderMessage(Formatter formatter) {
-            return formatter(Level, Message, Timestamp, Scope, Method);
+            return formatter(Level, Message, Timestamp.ToLocalTime(), Scope, Method);
         }
     }
 }
