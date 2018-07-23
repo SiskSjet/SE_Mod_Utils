@@ -6,10 +6,8 @@
             Level = level;
         }
 
-        /// <summary>
-        ///     Shows the <see cref="LogEventLevel" /> for this <see cref="LogEventHandler" />.
-        /// </summary>
-        public LogEventLevel Level { get; }
+        /// <inheritdoc />
+        public LogEventLevel Level { get; set; }
 
         /// <inheritdoc />
         public abstract void Emit(LogEvent logEvent);

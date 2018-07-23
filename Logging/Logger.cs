@@ -5,6 +5,7 @@ using System.Linq;
 namespace Sisk.Utils.Logging {
     /// <inheritdoc />
     public class Logger : ILogger {
+        private readonly object _syncObject = new object();
         private readonly Stack<string> _callingMethods = new Stack<string>();
         private readonly HashSet<Logger> _children = new HashSet<Logger>();
         private readonly HashSet<ILogEventHandler> _logHandlers = new HashSet<ILogEventHandler>();
@@ -18,9 +19,11 @@ namespace Sisk.Utils.Logging {
 
         /// <inheritdoc />
         ILogger ILogger.ForScope<TScope>() {
-            var logger = new Logger(typeof(TScope), this);
-            _children.Add(logger);
-            return logger;
+            lock (_syncObject) {
+                var logger = new Logger(typeof(TScope), this);
+                _children.Add(logger);
+                return logger;
+            }
         }
 
         /// <inheritdoc />
@@ -30,7 +33,9 @@ namespace Sisk.Utils.Logging {
 
         /// <inheritdoc />
         public void UnRegister(ILogEventHandler eventHandler) {
-            _logHandlers.Remove(eventHandler);
+            lock (_syncObject) {
+                _logHandlers.Remove(eventHandler);
+            }
         }
 
         /// <inheritdoc />
@@ -40,12 +45,14 @@ namespace Sisk.Utils.Logging {
 
         /// <inheritdoc />
         public void Flush() {
-            foreach (var handler in _logHandlers) {
-                handler.Flush();
-            }
+            lock (_syncObject) {
+                foreach (var handler in _logHandlers) {
+                    handler.Flush();
+                }
 
-            foreach (var logger in _children) {
-                logger.Flush();
+                foreach (var logger in _children) {
+                    logger.Flush();
+                }
             }
         }
 
@@ -66,17 +73,23 @@ namespace Sisk.Utils.Logging {
 
         /// <inheritdoc />
         public void EnterMethod(string method) {
-            _callingMethods.Push(method);
+            lock (_syncObject) {
+                _callingMethods.Push(method);
+            }
         }
 
         /// <inheritdoc />
         public void LeaveMethod() {
-            _callingMethods.Pop();
+            lock (_syncObject) {
+                _callingMethods.Pop();
+            }
         }
 
         /// <inheritdoc />
         public void Register(ILogEventHandler eventHandler) {
-            _logHandlers.Add(eventHandler);
+            lock (_syncObject) {
+                _logHandlers.Add(eventHandler);
+            }
         }
 
         /// <inheritdoc />
@@ -87,12 +100,14 @@ namespace Sisk.Utils.Logging {
 
         /// <inheritdoc />
         public void Close() {
-            foreach (var logHandler in _logHandlers) {
-                logHandler.Close();
-            }
+            lock (_syncObject) {
+                foreach (var logHandler in _logHandlers) {
+                    logHandler.Close();
+                }
 
-            foreach (var logger in _children) {
-                logger.Close();
+                foreach (var logger in _children) {
+                    logger.Close();
+                }
             }
         }
 
@@ -106,23 +121,29 @@ namespace Sisk.Utils.Logging {
         }
 
         private void Dispatch(LogEvent logEvent) {
-            foreach (var handler in _logHandlers.Where(x => x.IsEnabled(logEvent.Level))) {
-                handler.Emit(logEvent);
-            }
+            lock (_syncObject) {
+                foreach (var handler in _logHandlers.Where(x => x.IsEnabled(logEvent.Level))) {
+                    handler.Emit(logEvent);
+                }
 
-            _parent?.Dispatch(logEvent);
+                _parent?.Dispatch(logEvent);
+            }
         }
 
         private void Write(LogEventLevel level, string message) {
-            var method = _callingMethods.Any() ? _callingMethods.Peek() : "";
-            var logEvent = new LogEvent(DateTime.Now, level, message, _scope, method);
-            Dispatch(logEvent);
+            lock (_syncObject) {
+                var method = _callingMethods.Any() ? _callingMethods.Peek() : "";
+                var logEvent = new LogEvent(DateTime.Now, level, message, _scope, method);
+                Dispatch(logEvent);
+            }
         }
 
         private void Write(LogEventLevel level, Exception exception) {
-            var method = _callingMethods.Any() ? _callingMethods.Peek() : "";
-            var logEvent = new LogEvent(DateTime.Now, level, exception, _scope, method);
-            Dispatch(logEvent);
+            lock (_syncObject) {
+                var method = _callingMethods.Any() ? _callingMethods.Peek() : "";
+                var logEvent = new LogEvent(DateTime.Now, level, exception, _scope, method);
+                Dispatch(logEvent);
+            }
         }
 
         public class DisposingContext : IDisposable {
