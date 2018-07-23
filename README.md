@@ -4,6 +4,7 @@ Some libraries used by my other mods for Space Engineers.
 
 * [Logging](##Logging)
 * [Localization](##Localization)
+* [Profiler](##Profiler)
 
 ## Logging
 
@@ -110,4 +111,70 @@ If you need a formated and localized string you can use `GetString(string string
 ```csharp
 Localize.Create("Example_Formated_String", English: "Hello {0}");
 Localize.GetString("Example_Formated_String", "world!");
+```
+
+## Profiler
+
+The profiler can be used to measure the execution time of your code.
+
+### Usage
+
+To use the profiler simply call the static class `Profiler`.
+
+##### Measure
+
+To start measure a code block you can youse `Profiler.Measure(string scope, string method)`.
+
+###### Example
+
+```csharp
+public class DemoClass {
+    public void SomeRandomMethod() {
+        using (Profiler.Measure(nameof(DemoClass), nameof(SomeRandomMethod))) {
+            // your code thats should be profiled.
+        }
+    }
+}
+```
+
+##### Results
+
+The property `Profiler.Result` is an `IEnumerable` with all profiler results.
+
+###### Example
+
+```csharp
+private static void WriteProfileResults() {
+    if (Profiler.Results.Any()) {
+        using (var writer = MyAPIGateway.Utilities.WriteFileInLocalStorage("profiler.txt", typeof(Mod))) {
+            foreach (var result in Profiler.Results) {
+                writer.WriteLine(result);
+                // Example line:
+                // DemoClass.SomeRandomMethod():     600 executions, avg 0.099444ms, min 0.001500ms, max 29.107300ms, total 59.67ms
+            }
+        }
+    }
+}
+```
+
+
+##### SetLogger
+
+If you want to log directly you can set an logger action with `Profiler.SetLogger(Action<string> logger)`.
+
+###### Example
+
+```csharp
+public class DemoClass {
+    public DemoClass() {
+        Log = Logger.ForScope<DemoClass>();
+        Profiler.SetLogger(Log.Debug);
+    }
+    public ILogger Log { get; }
+    public void SomeRandomMethod() {
+        using (Profiler.Measure(nameof(DemoClass), nameof(SomeRandomMethod))) {
+            // your code thats should be profiled.
+        }
+    }
+}
 ```
