@@ -25,6 +25,7 @@ namespace Sisk.Utils.Logging.DefaultHandler {
             }
         }
 
+        /// <inheritdoc />
         public override void Emit(LogEvent logEvent) {
             lock (_cache) {
                 _cache.Enqueue(logEvent);
@@ -33,6 +34,7 @@ namespace Sisk.Utils.Logging.DefaultHandler {
             }
         }
 
+        /// <inheritdoc />
         public override void Flush() {
             if (_logWriter == null && MyAPIGateway.Utilities != null) {
                 _logWriter = MyAPIGateway.Utilities.WriteFileInWorldStorage(_fileName, typeof(Logger));
