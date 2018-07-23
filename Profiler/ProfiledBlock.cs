@@ -51,19 +51,19 @@
 
         private static string Format(int num) {
             if (num >= 1000000) {
-                return $"{num / 1000000,7:N1}M";
+                return $"{num / 1000000:N1}M";
             }
 
             if (num >= 1000) {
-                return $"{num / 1000,7:N1}K";
+                return $"{num / 1000:N1}K";
             }
 
-            return $"{num,8}";
+            return $"{num}";
         }
 
         /// <inheritdoc />
         public override string ToString() {
-            return $"avg {Avg:N6}ms, min {Min:N6}ms, max {Max:N6}ms, total {Total:N2}ms :{Scope}.{Method}()=> {Format(Executions)} executions";
+            return $"avg {Avg:N6}ms, min {Min:N6}ms, max {Max:N6}ms, total {Total:N2}ms :{Scope}.{Method}() => {Format(Executions)} executions";
         }
 
         /// <summary>
