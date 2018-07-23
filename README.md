@@ -2,9 +2,9 @@
 
 Some libraries used by my other mods for Space Engineers.
 
-* [Logging](#Logging)
-* [Localization](#Localization)
-* [Profiler](#Profiler)
+* [Logging](#logging)
+* [Localization](#localization)
+* [Profiler](#profiler)
 
 ## Logging
 
