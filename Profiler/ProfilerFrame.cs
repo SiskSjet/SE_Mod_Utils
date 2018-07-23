@@ -11,7 +11,7 @@ namespace Sisk.Utils.Profiler {
         public ProfilerFrame(string scope, string method) {
             Scope = scope;
             Method = method;
-            Name = $"{Scope}.{Name}()";
+            Name = $"{Scope}.{Method}()";
             Profiler.PushFrame(this);
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
