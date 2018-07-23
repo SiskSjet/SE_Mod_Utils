@@ -8,11 +8,13 @@ namespace Sisk.Utils.Logging.DefaultHandler {
         private readonly string _fileName;
         private readonly Formatter _formatter;
         private TextWriter _logWriter;
+        private readonly int _bufferSize;
         public WorldStorageHandler(string fileName, LogEventLevel level = LogEventLevel.All) : this(fileName, LogEvent.DefaultFormatter, level) { }
 
-        public WorldStorageHandler(string fileName, Formatter formatter, LogEventLevel level = LogEventLevel.All) : base(level) {
+        public WorldStorageHandler(string fileName, Formatter formatter, LogEventLevel level = LogEventLevel.All, int bufferSize = 50) : base(level) {
             _fileName = fileName;
             _formatter = formatter;
+            _bufferSize = bufferSize;
         }
 
         /// <inheritdoc />
@@ -30,7 +32,9 @@ namespace Sisk.Utils.Logging.DefaultHandler {
             lock (_cache) {
                 _cache.Enqueue(logEvent);
 
-                Flush();
+                if (_cache.Count > _bufferSize) {
+                    Flush();
+                }
             }
         }
 
