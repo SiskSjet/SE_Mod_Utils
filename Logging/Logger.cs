@@ -133,7 +133,7 @@ namespace Sisk.Utils.Logging {
         private void Write(LogEventLevel level, string message) {
             lock (_syncObject) {
                 var method = _callingMethods.Any() ? _callingMethods.Peek() : "";
-                var logEvent = new LogEvent(DateTime.Now, level, message, _scope, method);
+                var logEvent = new LogEvent(DateTime.UtcNow, level, message, _scope, method);
                 Dispatch(logEvent);
             }
         }
@@ -141,7 +141,7 @@ namespace Sisk.Utils.Logging {
         private void Write(LogEventLevel level, Exception exception) {
             lock (_syncObject) {
                 var method = _callingMethods.Any() ? _callingMethods.Peek() : "";
-                var logEvent = new LogEvent(DateTime.Now, level, exception, _scope, method);
+                var logEvent = new LogEvent(DateTime.UtcNow, level, exception, _scope, method);
                 Dispatch(logEvent);
             }
         }
