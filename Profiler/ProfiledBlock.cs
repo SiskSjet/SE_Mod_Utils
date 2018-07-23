@@ -63,7 +63,7 @@
 
         /// <inheritdoc />
         public override string ToString() {
-            return $"{$"{Scope}.{Method}",-20}(): {Format(Executions)} executions, avg {Avg:N6}ms, min {Min:N6}ms, max {Max:N6}ms, total {Total:N2}ms";
+            return $"avg {Avg:N6}ms, min {Min:N6}ms, max {Max:N6}ms, total {Total:N2}ms :{Scope}.{Method}()=> {Format(Executions)} executions";
         }
 
         /// <summary>

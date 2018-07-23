@@ -28,7 +28,7 @@ namespace Sisk.Utils.Profiler {
         /// </summary>
         /// <param name="frame">The <see cref="ProfilerFrame" /> that should be removed from the stack.</param>
         public static void PopFrame(ProfilerFrame frame) {
-            _logger?.Invoke($"{new string(' ', Stack.Count * 2 - 2)} {(frame.IsFrameStartLogged ? "<=" : "<>")} {frame.Method}: {frame.Stopwatch.Elapsed.TotalMilliseconds}ms");
+            _logger?.Invoke($"{new string(' ', Stack.Count * 2 - 2)} {(frame.IsFrameStartLogged ? "<=" : "<>")} {frame.Name}: {frame.Stopwatch.Elapsed.TotalMilliseconds:N6}ms");
 
             var total = Totals.ContainsKey(frame.Name) ? Totals[frame.Name] : new ProfiledBlock(frame.Scope, frame.Method);
             total.Add(frame);
@@ -44,7 +44,7 @@ namespace Sisk.Utils.Profiler {
             if (_logger != null) {
                 var last = Stack.LastOrDefault();
                 if (last != null && !last.IsFrameStartLogged) {
-                    _logger.Invoke($"{new string(' ', Stack.Count * 2 - 2)} => {last.Method}");
+                    _logger.Invoke($"{new string(' ', Stack.Count * 2 - 2)} => {last.Name}");
                     last.IsFrameStartLogged = true;
                 }
             }
