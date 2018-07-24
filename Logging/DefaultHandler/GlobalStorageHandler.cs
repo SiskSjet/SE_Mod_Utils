@@ -4,6 +4,7 @@ using Sandbox.ModAPI;
 
 namespace Sisk.Utils.Logging.DefaultHandler {
     public sealed class GlobalStorageHandler : LogEventHandler {
+        private readonly object _syncObject = new object();
         private readonly Queue<LogEvent> _cache = new Queue<LogEvent>();
         private readonly string _fileName;
         private readonly Formatter _formatter;
@@ -29,10 +30,10 @@ namespace Sisk.Utils.Logging.DefaultHandler {
 
         /// <inheritdoc />
         public override void Emit(LogEvent logEvent) {
-            lock (_cache) {
+            lock (_syncObject) {
                 _cache.Enqueue(logEvent);
 
-                if (_cache.Count > _bufferSize) {
+                if (_cache.Count >= _bufferSize) {
                     Flush();
                 }
             }
@@ -45,7 +46,7 @@ namespace Sisk.Utils.Logging.DefaultHandler {
             }
 
             if (_logWriter != null) {
-                lock (_cache) {
+                lock (_syncObject) {
                     while (_cache.Count > 0) {
                         var logEvent = _cache.Dequeue();
                         _logWriter.WriteLine(logEvent.RenderMessage(_formatter));
