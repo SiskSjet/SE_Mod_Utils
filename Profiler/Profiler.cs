@@ -5,6 +5,7 @@ using System.Linq;
 namespace Sisk.Utils.Profiler {
     public static class Profiler {
         private static readonly List<ProfilerFrame> Stack = new List<ProfilerFrame>();
+        private static readonly object SyncObject = new object();
         private static readonly Dictionary<string, ProfiledBlock> Totals = new Dictionary<string, ProfiledBlock>();
         private static Action<string> _logger;
 
@@ -28,12 +29,14 @@ namespace Sisk.Utils.Profiler {
         /// </summary>
         /// <param name="frame">The <see cref="ProfilerFrame" /> that should be removed from the stack.</param>
         public static void PopFrame(ProfilerFrame frame) {
-            _logger?.Invoke($"{new string(' ', Stack.Count * 2 - 2)} {(frame.IsFrameStartLogged ? "<=" : "<>")} {frame.Name}: {frame.Stopwatch.Elapsed.TotalMilliseconds:N6}ms");
+            lock (SyncObject) {
+                _logger?.Invoke($"{new string(' ', Stack.Count * 2 - 2)} {(frame.IsFrameStartLogged ? "<=" : "<>")} {frame.Name}: {frame.Stopwatch.Elapsed.TotalMilliseconds:N6}ms");
 
-            var total = Totals.ContainsKey(frame.Name) ? Totals[frame.Name] : new ProfiledBlock(frame.Scope, frame.Method);
-            total.Add(frame);
-            Totals[frame.Name] = total;
-            Stack.RemoveAt(Stack.Count - 1);
+                var total = Totals.ContainsKey(frame.Name) ? Totals[frame.Name] : new ProfiledBlock(frame.Scope, frame.Method);
+                total.Add(frame);
+                Totals[frame.Name] = total;
+                Stack.RemoveAt(Stack.Count - 1);
+            }
         }
 
         /// <summary>
@@ -41,15 +44,17 @@ namespace Sisk.Utils.Profiler {
         /// </summary>
         /// <param name="frame">The <see cref="ProfilerFrame" /> that should be added to the stack.</param>
         public static void PushFrame(ProfilerFrame frame) {
-            if (_logger != null) {
-                var last = Stack.LastOrDefault();
-                if (last != null && !last.IsFrameStartLogged) {
-                    _logger.Invoke($"{new string(' ', Stack.Count * 2 - 2)} => {last.Name}");
-                    last.IsFrameStartLogged = true;
+            lock (SyncObject) {
+                if (_logger != null) {
+                    var last = Stack.LastOrDefault();
+                    if (last != null && !last.IsFrameStartLogged) {
+                        _logger.Invoke($"{new string(' ', Stack.Count * 2 - 2)} => {last.Name}");
+                        last.IsFrameStartLogged = true;
+                    }
                 }
-            }
 
-            Stack.Add(frame);
+                Stack.Add(frame);
+            }
         }
 
         /// <summary>
@@ -57,7 +62,9 @@ namespace Sisk.Utils.Profiler {
         /// </summary>
         /// <param name="logger">The action used for logging.</param>
         public static void SetLogger(Action<string> logger) {
-            _logger = logger;
+            lock (SyncObject) {
+                _logger = logger;
+            }
         }
     }
 }
