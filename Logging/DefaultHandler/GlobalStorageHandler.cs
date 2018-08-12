@@ -4,12 +4,12 @@ using Sandbox.ModAPI;
 
 namespace Sisk.Utils.Logging.DefaultHandler {
     public sealed class GlobalStorageHandler : LogEventHandler {
-        private readonly object _syncObject = new object();
+        private readonly int _bufferSize;
         private readonly Queue<LogEvent> _cache = new Queue<LogEvent>();
         private readonly string _fileName;
         private readonly Formatter _formatter;
+        private readonly object _syncObject = new object();
         private TextWriter _logWriter;
-        private readonly int _bufferSize;
         public GlobalStorageHandler(string fileName, LogEventLevel level = LogEventLevel.All) : this(fileName, LogEvent.DefaultFormatter, level) { }
 
         public GlobalStorageHandler(string fileName, Formatter formatter, LogEventLevel level = LogEventLevel.All, int bufferSize = 50) : base(level) {
