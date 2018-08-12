@@ -5,6 +5,7 @@ Some libraries used by my other mods for Space Engineers.
 * [Logging](#logging)
 * [Localization](#localization)
 * [Profiler](#profiler)
+* [Net](#net)
 
 ## Logging
 
@@ -174,6 +175,90 @@ public class DemoClass {
     public void SomeRandomMethod() {
         using (Profiler.Measure(nameof(DemoClass), nameof(SomeRandomMethod))) {
             // your code thats should be profiled.
+        }
+    }
+}
+```
+
+## Net
+
+The Net library helps to send and receive Messages in multiplayer.
+
+### Usage
+
+First you have to create a new instance of `Network`.
+It requires a unique network id. No other mod should use this id.
+
+###### Example
+```csharp
+using ProtoBuf;
+using Sandbox.ModAPI;
+using Sisk.Utils.Net;
+using Sisk.Utils.Net.Messages;
+using VRage.Game;
+using VRage.Game.Components;
+
+namespace Demo {
+    [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
+    public class DemoSessionComponent : MySessionComponentBase {
+        private const ushort NETWORK_ID = 45531;
+
+        public Network Network { get; set; }
+
+        public override void Init(MyObjectBuilder_SessionComponent sessionComponent) {
+            base.Init(sessionComponent);
+
+            Network = new Network(NETWORK_ID);
+            if (Network.IsClient) {
+                MyAPIGateway.Utilities.MessageEntered += OnMessageEntered;
+                Network.Register<PongMessage>(OnPongMessageReceived);
+            }
+
+            if (Network.IsServer) {
+                Network.Register<PingMessage>(OnPingMessageReceived);
+            }
+        }
+
+        protected override void UnloadData() {
+            if (Network != null) {
+                if (Network.IsClient) {
+                    MyAPIGateway.Utilities.MessageEntered -= OnMessageEntered;
+                    Network.Unregister<PongMessage>(OnPongMessageReceived);
+                }
+
+                if (Network.IsServer) {
+                    Network.Unregister<PingMessage>(OnPingMessageReceived);
+                }
+            }
+        }
+
+        private void OnMessageEntered(string messagetext, ref bool sendtoothers) {
+            if (messagetext.ToLower().StartsWith("ping")) {
+                sendtoothers = false;
+                Network.SendToServer(new PingMessage());
+            }
+        }
+
+        private void OnPingMessageReceived(ulong sender, PingMessage message) {
+            Network.Send(new PongMessage(), sender);
+        }
+
+        private void OnPongMessageReceived(ulong sender, PongMessage message) {
+            MyAPIGateway.Utilities.ShowMessage("server", "received pong response from server.");
+        }
+    }
+
+    [ProtoContract]
+    public class PingMessage : IMessage {
+        public byte[] Serialze() {
+            return MyAPIGateway.Utilities.SerializeToBinary(this);
+        }
+    }
+
+    [ProtoContract]
+    public class PongMessage : IMessage {
+        public byte[] Serialze() {
+            return MyAPIGateway.Utilities.SerializeToBinary(this);
         }
     }
 }
