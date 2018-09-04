@@ -75,43 +75,55 @@ public class Mod : MySessionComponentBase {
 
 ## Localization
 
-Localization helps to create and use localized strings.
+In v1.3.4 Localization library was removed, because there is a better way to localize your mod.
+You can use Resource files for your translations, just like the vanilla game.
 
-### Usage
+##### Load Localizations
 
-To use the localization simply call the methods in the static class `Localize`.
-
-##### Create
-
-To create a new localized string you can call `Localize.Create(string id, string English, string Czech = null, ...)`
-It has a parameter for every available language in Space Engineers, but only the `id` and `English` parameter are required.
-
-###### Example
+ To load your localizations, you can use:
 
 ```csharp
-Localize.Create("DisplayName_Item_Tier_2_Upgrade", English: "Tier 2 Upgrade");
+MyTexts.LoadSupportedLanguages(string rootDirectory, HashSet<MyLanguagesEnum> outSupportedLanguages)
 ```
 
-##### Get
-
-To get a localized `MyStringId` you can call `Localize.Get(string stringId)`.
-the result is automatic localized to the current language set in Space Engineers.
-
 ###### Example
+This session component tries to load the localization resource files from `Data\Localization` folder on `LoadData` call.
 
 ```csharp
-Localize.Get("DisplayName_Item_Tier_2_Upgrade");
-```
+using System.Collections.Generic;
+using Sandbox.ModAPI;
+using VRage;
+using VRage.Game.Components;
 
-##### GetString
+namespace Sisk.ExampleMod {
+    [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
+    public class ExampleMod : MySessionComponentBase {
+        /// <summary>
+        ///     Load mod settings and create localizations.
+        /// </summary>
+        public override void LoadData() {
+            LoadTranslation();
+            // ... load other stuff like settings.
+        }
 
-If you need a formated and localized string you can use `GetString(string stringId, params object[] args))`.
+        /// <summary>
+        ///     Load translations for this mod.
+        /// </summary>
+        private void LoadTranslation() {
+            var currentLanguage = MyAPIGateway.Session.Config.Language;
+            var supportedLanguages = new HashSet<MyLanguagesEnum>();
 
-###### Example
-
-```csharp
-Localize.Create("Example_Formated_String", English: "Hello {0}");
-Localize.GetString("Example_Formated_String", "world!");
+            MyTexts.LoadSupportedLanguages($"{ModContext.ModPathData}\\Localization", supportedLanguages);
+            if (supportedLanguages.Contains(currentLanguage)) {
+                // load translation for current language.
+                MyTexts.LoadTexts($"{ModContext.ModPathData}\\Localization", MyTexts.Languages[currentLanguage].CultureName);
+            } else if (supportedLanguages.Contains(MyLanguagesEnum.English)) {
+                // fall back to english if no matching translations found.
+                MyTexts.LoadTexts($"{ModContext.ModPathData}\\Localization", MyTexts.Languages[MyLanguagesEnum.English].CultureName);
+            }
+        }
+    }
+}
 ```
 
 ## Profiler
