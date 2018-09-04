@@ -80,7 +80,7 @@ public class Mod : MySessionComponentBase {
 
 ## Localization
 
-In v1.3.4 Localization library was removed, because there is a better way to localize your mod.
+In v1.4.0 Localization library was removed, because there is a better way to localize your mod.
 You can use Resource files for your translations, just like the vanilla game.
 
 ##### Load Localizations
