@@ -5,12 +5,12 @@ using System.Linq;
 namespace Sisk.Utils.Logging {
     /// <inheritdoc />
     public class Logger : ILogger {
-        private readonly object _syncObject = new object();
         private readonly Stack<string> _callingMethods = new Stack<string>();
         private readonly HashSet<Logger> _children = new HashSet<Logger>();
         private readonly HashSet<ILogEventHandler> _logHandlers = new HashSet<ILogEventHandler>();
         private readonly Logger _parent;
         private readonly Type _scope;
+        private readonly object _syncObject = new object();
 
         internal Logger(Type scope, Logger parent = null) {
             _scope = scope;
@@ -75,12 +75,20 @@ namespace Sisk.Utils.Logging {
         public void EnterMethod(string method) {
             lock (_syncObject) {
                 _callingMethods.Push(method);
+
+                if (LogOnEnterAndLeaveMethods) {
+                    Debug("Start");
+                }
             }
         }
 
         /// <inheritdoc />
         public void LeaveMethod() {
             lock (_syncObject) {
+                if (LogOnEnterAndLeaveMethods) {
+                    Debug("End");
+                }
+
                 _callingMethods.Pop();
             }
         }
@@ -91,6 +99,9 @@ namespace Sisk.Utils.Logging {
                 _logHandlers.Add(eventHandler);
             }
         }
+
+        /// <inheritdoc />
+        public bool LogOnEnterAndLeaveMethods { get; set; }
 
         /// <inheritdoc />
         public IDisposable BeginMethod(string methodName) {
@@ -146,7 +157,7 @@ namespace Sisk.Utils.Logging {
             }
         }
 
-        public class DisposingContext : IDisposable {
+        internal class DisposingContext : IDisposable {
             private readonly Logger _logger;
 
             public DisposingContext(Logger logger) {
