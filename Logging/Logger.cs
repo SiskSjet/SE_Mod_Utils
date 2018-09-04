@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -157,7 +157,7 @@ namespace Sisk.Utils.Logging {
             }
         }
 
-        public class DisposingContext : IDisposable {
+        internal class DisposingContext : IDisposable {
             private readonly Logger _logger;
 
             public DisposingContext(Logger logger) {
