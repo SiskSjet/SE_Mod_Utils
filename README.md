@@ -9,6 +9,11 @@ Some libraries used by my other mods for Space Engineers.
 
 ## Logging
 
+### Options
+
+* bool LogOnEnterAndLeaveMethods
+  * set if ILogger should create a log entry on `BeginMethod`, `EnterMethod` and `LeaveMethod` methods.
+
 ### ILogEventHandler
 
 This library comes with three default `ILogEventHandler`.

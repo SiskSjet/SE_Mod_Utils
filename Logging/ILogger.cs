@@ -3,6 +3,12 @@
 namespace Sisk.Utils.Logging {
     public interface ILogger {
         /// <summary>
+        ///     Option to set if ILogger should create a log entry on <see cref="BeginMethod" />, <see cref="EnterMethod" /> and
+        ///     <see cref="LeaveMethod" /> methods.
+        /// </summary>
+        bool LogOnEnterAndLeaveMethods { get; set; }
+
+        /// <summary>
         ///     Add given method to method stack and remove it on Dispose.
         /// </summary>
         /// <param name="methodName">The method name</param>
