@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,12 +75,20 @@ namespace Sisk.Utils.Logging {
         public void EnterMethod(string method) {
             lock (_syncObject) {
                 _callingMethods.Push(method);
+
+                if (LogOnEnterAndLeaveMethods) {
+                    Debug("Start");
+                }
             }
         }
 
         /// <inheritdoc />
         public void LeaveMethod() {
             lock (_syncObject) {
+                if (LogOnEnterAndLeaveMethods) {
+                    Debug("End");
+                }
+
                 _callingMethods.Pop();
             }
         }
@@ -91,6 +99,9 @@ namespace Sisk.Utils.Logging {
                 _logHandlers.Add(eventHandler);
             }
         }
+
+        /// <inheritdoc />
+        public bool LogOnEnterAndLeaveMethods { get; set; }
 
         /// <inheritdoc />
         public IDisposable BeginMethod(string methodName) {
