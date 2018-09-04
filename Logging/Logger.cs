@@ -5,12 +5,12 @@ using System.Linq;
 namespace Sisk.Utils.Logging {
     /// <inheritdoc />
     public class Logger : ILogger {
-        private readonly object _syncObject = new object();
         private readonly Stack<string> _callingMethods = new Stack<string>();
         private readonly HashSet<Logger> _children = new HashSet<Logger>();
         private readonly HashSet<ILogEventHandler> _logHandlers = new HashSet<ILogEventHandler>();
         private readonly Logger _parent;
         private readonly Type _scope;
+        private readonly object _syncObject = new object();
 
         internal Logger(Type scope, Logger parent = null) {
             _scope = scope;
