@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-* fix a typo in an method name ([cefe3f3](https://github.com/SiskSjet/SE_Mod_Utils/commit/cefe3f3))
+* fix a typo in an method name ([41d218](https://github.com/SiskSjet/SE_Mod_Utils/commit/41d218))
 
 
 
