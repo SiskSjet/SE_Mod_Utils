@@ -246,7 +246,7 @@ namespace Sisk.Utils.Net {
         private byte[] WrapAndSerialize(IMessage message) {
             var wrapper = new MessageWrapper(message.GetType().FullName) {
                 Sender = MyId,
-                Content = message.Serialze()
+                Content = message.Serialize()
             };
 
             return MyAPIGateway.Utilities.SerializeToBinary(wrapper);
@@ -261,7 +261,7 @@ namespace Sisk.Utils.Net {
             var wrapper = new EntityMessageWrapper {
                 EntityId = message.EntityId,
                 Sender = MyId,
-                Content = message.Serialze()
+                Content = message.Serialize()
             };
 
             return WrapAndSerialize(new EntityMessage { Wrapper = wrapper });

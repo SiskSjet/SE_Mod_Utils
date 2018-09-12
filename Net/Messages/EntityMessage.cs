@@ -10,7 +10,7 @@ namespace Sisk.Utils.Net.Messages {
         [ProtoMember(1)]
         public EntityMessageWrapper Wrapper { get; set; }
 
-        public byte[] Serialze() {
+        public byte[] Serialize() {
             return MyAPIGateway.Utilities.SerializeToBinary(this);
         }
     }
