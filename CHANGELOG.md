@@ -1,3 +1,13 @@
+<a name="1.4.1"></a>
+# [1.4.1](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.4.0...v1.4.1) (2018-09-12)
+
+
+### Bug Fixes
+
+* fix a typo in an method name ([cefe3f3](https://github.com/SiskSjet/SE_Mod_Utils/commit/cefe3f3))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.3.3...v1.4.0) (2018-09-04)
 
