@@ -80,16 +80,7 @@ public class Mod : MySessionComponentBase {
 
 ## Localization
 
-In v1.4.0 Localization library was removed, because there is a better way to localize your mod.
-You can use Resource files for your translations, just like the vanilla game.
-
-##### Load Localizations
-
- To load your localizations, you can use:
-
-```csharp
-MyTexts.LoadSupportedLanguages(string rootDirectory, HashSet<MyLanguagesEnum> outSupportedLanguages)
-```
+Localization library is back, because the previous way didn't work with uploaded mods :/
 
 ###### Example
 This session component tries to load the localization resource files from `Data\Localization` folder on `LoadData` call.
@@ -103,6 +94,17 @@ using VRage.Game.Components;
 namespace Sisk.ExampleMod {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ExampleMod : MySessionComponentBase {
+
+        private static IDictionary<string, string> de => new Dictionary<string, string> {
+            { "Description_SS_Enable", "[option] Aktiviert eine Option" },
+            ...
+        };
+
+        private static IDictionary<string, string> en => new Dictionary<string, string> {
+            { "Description_SS_Enable", "[option] Enables an option" },
+            ...
+        };
+
         /// <summary>
         ///     Load mod settings and create localizations.
         /// </summary>
@@ -117,6 +119,15 @@ namespace Sisk.ExampleMod {
         private void LoadTranslation() {
             var currentLanguage = MyAPIGateway.Session.Config.Language;
             var supportedLanguages = new HashSet<MyLanguagesEnum>();
+
+            switch (currentLanguage) {
+                case MyLanguagesEnum.English:
+                    Lang.Add(MyLanguagesEnum.English, en);
+                    break;
+                case MyLanguagesEnum.German:
+                    Lang.Add(MyLanguagesEnum.German, de);
+                    break;
+            }
 
             MyTexts.LoadSupportedLanguages($"{ModContext.ModPathData}\\Localization", supportedLanguages);
             if (supportedLanguages.Contains(currentLanguage)) {
