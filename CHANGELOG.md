@@ -1,3 +1,13 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.4.0...v1.5.0) (2018-10-24)
+
+
+### Features
+
+* **Localization:** add localization lib, old method only work offline ([8d86ec0](https://github.com/SiskSjet/SE_Mod_Utils/commit/8d86ec0))
+
+
+
 <a name="1.4.1"></a>
 # [1.4.1](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.4.0...v1.4.1) (2018-09-12)
 
