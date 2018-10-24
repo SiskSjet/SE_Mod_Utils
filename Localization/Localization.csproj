@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2285E3A1-63A2-4632-AA74-CAA8DAC96C71}</ProjectGuid>
+    <ProjectGuid>{2675BEC6-9106-4AB8-A2DC-77CD569D9954}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sisk.Utils.Net</RootNamespace>
-    <AssemblyName>Net</AssemblyName>
+    <RootNamespace>Sisk.Utils.Localization</RootNamespace>
+    <AssemblyName>Localization</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,32 +30,28 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sandbox.Common">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\Sandbox.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="VRage.Game">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Game.dll</HintPath>
+    <Reference Include="System.Xml" />
+    <Reference Include="VRage">
+      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.dll</HintPath>
     </Reference>
     <Reference Include="VRage.Library">
       <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Library.dll</HintPath>
     </Reference>
+    <Reference Include="VRage.Math">
+      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Math.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delegates\EntityMessageHandler.cs" />
-    <Compile Include="Delegates\MessageHandler.cs" />
-    <Compile Include="Messages\EntityMessage.cs" />
-    <Compile Include="Messages\IEntityMessage.cs" />
-    <Compile Include="Messages\IMessage.cs" />
-    <Compile Include="Network.cs" />
+    <Compile Include="Lang.cs" />
+    <Compile Include="Texts.cs" />
+    <Compile Include="Extensions\MyStringIdExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wrapper\EntityMessageWrapper.cs" />
-    <Compile Include="Wrapper\MessageHandlerWrapper.cs" />
-    <Compile Include="Wrapper\MessageHandlerWrapperComparer.cs" />
-    <Compile Include="Wrapper\MessageWrapper.cs" />
-    <Compile Include="Wrapper\Wrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
