@@ -11,6 +11,20 @@ using VRageMath;
 
 namespace Sisk.Utils.TerminalControls {
     public static class Extensions {
+        public static IMyTerminalAction CreateButtonAction<TBlock>(this IMyTerminalControlButton button) where TBlock : IMyTerminalBlock {
+            return CreateButtonAction<TBlock>(button, TerminalActionIcons.TOGGLE);
+        }
+
+        public static IMyTerminalAction CreateButtonAction<TBlock>(this IMyTerminalControlButton button, string iconPath) where TBlock : IMyTerminalBlock {
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(button.Id);
+            action.Name = MyTexts.Get(button.Title);
+            action.Action = button.Action;
+            action.Icon = iconPath;
+            action.Enabled = button.Enabled;
+
+            return action;
+        }
+
         public static IMyTerminalAction CreateDecreaseAction<TBlock>(this IMyTerminalControlSlider slider, float step, Func<IMyTerminalBlock, float> min, Func<IMyTerminalBlock, float> max) where TBlock : IMyTerminalBlock {
             return CreateDecreaseAction<TBlock>(slider, step, min, max, TerminalActionIcons.DECREASE);
         }
