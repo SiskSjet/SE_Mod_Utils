@@ -31,7 +31,7 @@ namespace Sisk.Utils.TerminalControls {
 
         public static IMyTerminalAction CreateDecreaseAction<TBlock>(this IMyTerminalControlSlider slider, float step, Func<IMyTerminalBlock, float> min, Func<IMyTerminalBlock, float> max, string iconPath) where TBlock : IMyTerminalBlock {
             var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Decrease" + ((IMyTerminalControl) slider).Id);
-            action.Name = MyTexts.Get(MySpaceTexts.ToolbarAction_Decrease).Append(" ").Append(GetTitle(slider.Title));
+            action.Name = Combine(MySpaceTexts.ToolbarAction_Decrease, slider.Title);
             action.Action = block => slider.Setter(block, MathHelper.Clamp(slider.Getter(block) - max(block) * step, min(block), max(block)));
             action.Writer = slider.Writer;
             action.Icon = iconPath;
@@ -46,7 +46,7 @@ namespace Sisk.Utils.TerminalControls {
 
         public static IMyTerminalAction CreateIncreaseAction<TBlock>(this IMyTerminalControlSlider slider, float step, Func<IMyTerminalBlock, float> min, Func<IMyTerminalBlock, float> max, string iconPath) where TBlock : IMyTerminalBlock {
             var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Increase" + ((IMyTerminalControl) slider).Id);
-            action.Name = MyTexts.Get(MySpaceTexts.ToolbarAction_Increase).Append(" ").Append(GetTitle(slider.Title));
+            action.Name = Combine(MySpaceTexts.ToolbarAction_Increase, slider.Title);
             action.Action = block => slider.Setter(block, MathHelper.Clamp(slider.Getter(block) + max(block) * step, min(block), max(block)));
             action.Writer = slider.Writer;
             action.Icon = iconPath;
@@ -113,7 +113,7 @@ namespace Sisk.Utils.TerminalControls {
 
         public static IMyTerminalAction CreateResetAction<TBlock>(this IMyTerminalControlSlider slider, Func<IMyTerminalBlock, float> defaultValue, string iconPath) where TBlock : IMyTerminalBlock {
             var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Reset" + ((IMyTerminalControl) slider).Id);
-            action.Name = MyTexts.Get(MySpaceTexts.ToolbarAction_Reset).Append(" ").Append(GetTitle(slider.Title));
+            action.Name = Combine(MySpaceTexts.ToolbarAction_Reset, slider.Title);
             action.Action = block => slider.Setter(block, defaultValue(block));
             action.Writer = slider.Writer;
             action.Icon = iconPath;
@@ -162,6 +162,16 @@ namespace Sisk.Utils.TerminalControls {
             return action;
         }
 
+        private static StringBuilder Combine(MyStringId prefix, MyStringId title) {
+            var sb = new StringBuilder();
+            var original = MyTexts.Get(prefix);
+            if (original.Length > 0) {
+                sb.Append(original).Append(" ");
+            }
+
+            return sb.Append(MyTexts.GetString(title)).TrimTrailingWhitespace();
+        }
+
         private static IMyTerminalControlProperty<TValue> CreateProperty<TBlock, TValue>(this IMyTerminalValueControl<TValue> control) where TBlock : IMyTerminalBlock {
             var property = MyAPIGateway.TerminalControls.CreateProperty<TValue, TBlock>(((IMyTerminalControl) control).Id);
             property.Getter = control.Getter;
@@ -180,6 +190,16 @@ namespace Sisk.Utils.TerminalControls {
             }
 
             return stringBuilder;
+        }
+
+        private static StringBuilder TrimTrailingWhitespace(this StringBuilder sb) {
+            var length = sb.Length;
+            while (length > 0 && (sb[length - 1] == ' ' || sb[length - 1] == '\r' || sb[length - 1] == '\n')) {
+                --length;
+            }
+
+            sb.Length = length;
+            return sb;
         }
     }
 }
