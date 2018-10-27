@@ -1,3 +1,13 @@
+<a name="1.5.3"></a>
+# [1.5.3](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.5.2...v1.5.3) (2018-10-27)
+
+
+### Bug Fixes
+
+* fix an issue with custom actions names ([442747a](https://github.com/SiskSjet/SE_Mod_Utils/commit/442747a))
+
+
+
 <a name="1.5.2"></a>
 # [1.5.2](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.5.1...v1.5.2) (2018-10-25)
 
