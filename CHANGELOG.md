@@ -1,3 +1,12 @@
+# [1.6.1](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.0...v1.6.1) (2019-01-30)
+
+
+### Bug Fixes
+
+* fix removed used using statement ([01ab9ce](https://github.com/SiskSjet/SE_Mod_Utils/commit/01ab9ce))
+
+
+
 # [1.6.0](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.5.3...v1.6.0) (2019-01-30)
 
 
