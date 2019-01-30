@@ -41,12 +41,6 @@
     <Reference Include="VRage">
       <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.dll</HintPath>
     </Reference>
-    <Reference Include="VRage.Library">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Library.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Math">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Math.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lang.cs" />

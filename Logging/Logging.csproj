@@ -49,9 +49,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="VRage">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.dll</HintPath>
-    </Reference>
     <Reference Include="VRage.Game">
       <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Game.dll</HintPath>
     </Reference>
