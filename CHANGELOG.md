@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.5.3...v1.6.0) (2019-01-30)
+
+
+### Features
+
+* add a CommandHandler ([9d0036c](https://github.com/SiskSjet/SE_Mod_Utils/commit/9d0036c))
+
+
+
 <a name="1.5.3"></a>
 # [1.5.3](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.5.2...v1.5.3) (2018-10-27)
 
