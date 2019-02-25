@@ -69,6 +69,10 @@ namespace Sisk.Utils.CommandHandler {
             string parameter;
 
             if (!string.IsNullOrWhiteSpace(Prefix)) {
+                if (argument.Length <= Prefix.Length) {
+                    return false;
+                }
+
                 var prefix = argument.Substring(0, Prefix.Length).ToLower();
                 if (prefix != Prefix.ToLower()) {
                     return false;
