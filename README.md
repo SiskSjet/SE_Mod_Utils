@@ -80,62 +80,45 @@ public class Mod : MySessionComponentBase {
 
 ## Localization
 
-Localization library is back, because the previous way didn't work with uploaded mods :/
+Localization is removed with v1.6.3, because it's now possible to load resx files.
 
 ###### Example
 This session component tries to load the localization resource files from `Data\Localization` folder on `LoadData` call.
+The resx files should named `MyTexts.resx`, `MyTexts.{culture}.resx` like the vanilla ones.
 
 ```csharp
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Sandbox.ModAPI;
 using VRage;
 using VRage.Game.Components;
 
-namespace Sisk.ExampleMod {
+namespace Example {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
-    public class ExampleMod : MySessionComponentBase {
-
-        private static IDictionary<string, string> de => new Dictionary<string, string> {
-            { "Description_SS_Enable", "[option] Aktiviert eine Option" },
-            ...
-        };
-
-        private static IDictionary<string, string> en => new Dictionary<string, string> {
-            { "Description_SS_Enable", "[option] Enables an option" },
-            ...
-        };
-
+    public class Mod : MySessionComponentBase {
         /// <summary>
-        ///     Load mod settings and create localizations.
+        ///     Load mod data.
         /// </summary>
         public override void LoadData() {
-            LoadTranslation();
-            // ... load other stuff like settings.
+            LoadLocalization();
         }
 
         /// <summary>
-        ///     Load translations for this mod.
+        ///     Load localizations for this mod.
         /// </summary>
-        private void LoadTranslation() {
-            var currentLanguage = MyAPIGateway.Session.Config.Language;
+        private void LoadLocalization() {
+            var path = Path.Combine(ModContext.ModPathData, "Localization");
             var supportedLanguages = new HashSet<MyLanguagesEnum>();
+            MyTexts.LoadSupportedLanguages(path, supportedLanguages);
 
-            switch (currentLanguage) {
-                case MyLanguagesEnum.English:
-                    Lang.Add(MyLanguagesEnum.English, en);
-                    break;
-                case MyLanguagesEnum.German:
-                    Lang.Add(MyLanguagesEnum.German, de);
-                    break;
-            }
+            var currentLanguage = supportedLanguages.Contains(MyAPIGateway.Session.Config.Language) ? MyAPIGateway.Session.Config.Language : MyLanguagesEnum.English;
+            var languageDescription = MyTexts.Languages.Where(x => x.Key == currentLanguage).Select(x => x.Value).FirstOrDefault();
+            if (languageDescription != null) {
+                var cultureName = string.IsNullOrWhiteSpace(languageDescription.CultureName) ? null : languageDescription.CultureName;
+                var subcultureName = string.IsNullOrWhiteSpace(languageDescription.SubcultureName) ? null : languageDescription.SubcultureName;
 
-            MyTexts.LoadSupportedLanguages($"{ModContext.ModPathData}\\Localization", supportedLanguages);
-            if (supportedLanguages.Contains(currentLanguage)) {
-                // load translation for current language.
-                MyTexts.LoadTexts($"{ModContext.ModPathData}\\Localization", MyTexts.Languages[currentLanguage].CultureName);
-            } else if (supportedLanguages.Contains(MyLanguagesEnum.English)) {
-                // fall back to english if no matching translations found.
-                MyTexts.LoadTexts($"{ModContext.ModPathData}\\Localization", MyTexts.Languages[MyLanguagesEnum.English].CultureName);
+                MyTexts.LoadTexts(path, cultureName, subcultureName);
             }
         }
     }

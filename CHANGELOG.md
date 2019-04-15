@@ -1,3 +1,12 @@
+# [1.6.3](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.2...v1.6.3) (2019-04-15)
+
+
+### Features
+
+* remove `Localization` because it's now possible to load resx files ([7c94c00](https://github.com/SiskSjet/SE_Mod_Utils/commit/7c94c00))
+
+
+
 # [1.6.2](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.1...v1.6.2) (2019-02-25)
 
 
