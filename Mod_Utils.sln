@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler", "Profiler\Profil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net", "Net\Net.csproj", "{2285E3A1-63A2-4632-AA74-CAA8DAC96C71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization", "Localization\Localization.csproj", "{2675BEC6-9106-4AB8-A2DC-77CD569D9954}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalControls", "TerminalControls\TerminalControls.csproj", "{BEAE5F29-1B17-4F13-8262-6EE88B8CC41B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandHandler", "CommandHandler\CommandHandler.csproj", "{F3734666-0ACA-4CDC-B1B1-CD955FB6B4A8}"
@@ -40,10 +38,6 @@ Global
 		{2285E3A1-63A2-4632-AA74-CAA8DAC96C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2285E3A1-63A2-4632-AA74-CAA8DAC96C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2285E3A1-63A2-4632-AA74-CAA8DAC96C71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2675BEC6-9106-4AB8-A2DC-77CD569D9954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2675BEC6-9106-4AB8-A2DC-77CD569D9954}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2675BEC6-9106-4AB8-A2DC-77CD569D9954}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2675BEC6-9106-4AB8-A2DC-77CD569D9954}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BEAE5F29-1B17-4F13-8262-6EE88B8CC41B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BEAE5F29-1B17-4F13-8262-6EE88B8CC41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEAE5F29-1B17-4F13-8262-6EE88B8CC41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
