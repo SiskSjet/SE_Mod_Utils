@@ -1,3 +1,12 @@
+# [1.6.4](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.3...v1.6.4) (2019-05-06)
+
+
+### Bug Fixes
+
+* fix missing message type check on entity messages ([4897365](https://github.com/SiskSjet/SE_Mod_Utils/commit/4897365))
+
+
+
 # [1.6.3](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.2...v1.6.3) (2019-04-15)
 
 
