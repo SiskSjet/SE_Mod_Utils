@@ -14,7 +14,7 @@ namespace Sisk.Utils.Net {
     ///     A class that handles networking.
     /// </summary>
     public class Network {
-        private readonly Dictionary<long, HashSet<MessageHandlerWrapper>> _entityMessageHandler = new Dictionary<long, HashSet<MessageHandlerWrapper>>();
+        private readonly Dictionary<long, Dictionary<string, HashSet<MessageHandlerWrapper>>> _entityMessageHandler = new Dictionary<long, Dictionary<string, HashSet<MessageHandlerWrapper>>>();
         private readonly ushort _id;
         private readonly Dictionary<string, HashSet<MessageHandlerWrapper>> _messageHandler = new Dictionary<string, HashSet<MessageHandlerWrapper>>();
         private readonly MessageHandlerWrapperComparer _wrapperComparer = new MessageHandlerWrapperComparer();
@@ -92,11 +92,23 @@ namespace Sisk.Utils.Net {
         /// <param name="entityId">The entity id.</param>
         /// <param name="handler">The handler executed on received message of given entity id.</param>
         public void Register<TMessageType>(long entityId, EntityMessageHandler<TMessageType> handler) where TMessageType : IEntityMessage {
-            if (!_entityMessageHandler.ContainsKey(entityId)) {
-                _entityMessageHandler.Add(entityId, new HashSet<MessageHandlerWrapper>(_wrapperComparer));
+            var type = typeof(TMessageType).FullName;
+
+            if (type == null) {
+                throw new Exception($"Unable to get type of {typeof(TMessageType)}");
             }
 
-            _entityMessageHandler[entityId].Add(MessageHandlerWrapper.Create(handler));
+            if (!_entityMessageHandler.ContainsKey(entityId)) {
+                _entityMessageHandler.Add(entityId, new Dictionary<string, HashSet<MessageHandlerWrapper>> {
+                    { type, new HashSet<MessageHandlerWrapper>(_wrapperComparer) }
+                });
+            }
+
+            if (!_entityMessageHandler[entityId].ContainsKey(type)) {
+                _entityMessageHandler[entityId].Add(type, new HashSet<MessageHandlerWrapper>(_wrapperComparer));
+            }
+
+            _entityMessageHandler[entityId][type].Add(MessageHandlerWrapper.Create(handler));
         }
 
         /// <summary>
@@ -206,10 +218,16 @@ namespace Sisk.Utils.Net {
         /// <param name="entityId">The entity id.</param>
         /// <param name="handler">The handler to unregister.</param>
         public void Unregister<TMessageType>(long entityId, EntityMessageHandler<TMessageType> handler) where TMessageType : IEntityMessage {
+            var type = typeof(TMessageType).FullName;
+
+            if (type == null) {
+                throw new Exception($"Unable to get type of {typeof(TMessageType)}");
+            }
+
             if (_entityMessageHandler.ContainsKey(entityId)) {
                 var wrapper = MessageHandlerWrapper.Create(handler);
-                if (_entityMessageHandler[entityId].Contains(wrapper)) {
-                    _entityMessageHandler[entityId].Remove(wrapper);
+                if (_entityMessageHandler.ContainsKey(entityId) && _entityMessageHandler[entityId].ContainsKey(type) && _entityMessageHandler[entityId][type].Contains(wrapper)) {
+                    _entityMessageHandler[entityId][type].Remove(wrapper);
                 }
             }
         }
@@ -217,10 +235,11 @@ namespace Sisk.Utils.Net {
         private void OnEntityMessageReceived(ulong sender, EntityMessage entityMessage) {
             var wrapper = entityMessage.Wrapper;
 
-            if (_entityMessageHandler.ContainsKey(wrapper.EntityId)) {
-                var handlers = _entityMessageHandler[wrapper.EntityId];
+            if (_entityMessageHandler.ContainsKey(wrapper.EntityId) && _entityMessageHandler[wrapper.EntityId].ContainsKey(wrapper.Type)) {
+                var handlers = _entityMessageHandler[wrapper.EntityId][wrapper.Type];
                 foreach (var handler in handlers) {
                     var message = handler.Deserialize(wrapper);
+
                     handler.Invoke(wrapper.Sender, message);
                 }
             }
@@ -258,7 +277,7 @@ namespace Sisk.Utils.Net {
         /// <param name="message">The message that get wrapped.</param>
         /// <returns>Returns the serialized wrapper as a byte[].</returns>
         private byte[] WrapAndSerialize(IEntityMessage message) {
-            var wrapper = new EntityMessageWrapper {
+            var wrapper = new EntityMessageWrapper(message.GetType().FullName) {
                 EntityId = message.EntityId,
                 Sender = MyId,
                 Content = message.Serialize()
