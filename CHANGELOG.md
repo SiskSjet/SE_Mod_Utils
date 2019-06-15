@@ -1,3 +1,12 @@
+# [1.6.5](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.4...v1.6.5) (2019-06-15)
+
+
+### Bug Fixes
+
+* protobuf is since 1.191 in it's own assembly ([1002a82](https://github.com/SiskSjet/SE_Mod_Utils/commit/1002a82))
+
+
+
 # [1.6.4](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.3...v1.6.4) (2019-05-06)
 
 
