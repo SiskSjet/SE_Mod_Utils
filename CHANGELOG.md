@@ -1,9 +1,26 @@
+# [1.6.7](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.6...v1.6.7) (2019-09-27)
+
+
+### Bug Fixes
+
+* fix issue where `ShowHelp` in `CommandHandler` shows wrong command ([6d604ac](https://github.com/SiskSjet/SE_Mod_Utils/commit/6d604ac))
+
+
+# [1.6.6](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.5...v1.6.6) (2019-08-22)
+
+
+### Bug Fixes
+
+* fix protobuf assembly since new SE version changed it again ([011717](https://github.com/SiskSjet/SE_Mod_Utils/commit/011717))
+
+
+
 # [1.6.5](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.4...v1.6.5) (2019-06-15)
 
 
 ### Bug Fixes
 
-* protobuf is since 1.191 in it's own assembly ([1002a82](https://github.com/SiskSjet/SE_Mod_Utils/commit/1002a82))
+* fix protobuf is since 1.191 in it's own assembly ([1002a82](https://github.com/SiskSjet/SE_Mod_Utils/commit/1002a82))
 
 
 
