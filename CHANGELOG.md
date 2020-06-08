@@ -1,3 +1,12 @@
+# [1.6.8](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.7...v1.6.8) (2020-06-08)
+
+
+### Features
+
+* add a session component for localization ([9d2640b](https://github.com/SiskSjet/SE_Mod_Utils/commit/9d2640b99ce2f1820e29f28e445b2faf9b4b948e))
+
+
+
 # [1.6.7](https://github.com/SiskSjet/SE_Mod_Utils/compare/v1.6.6...v1.6.7) (2019-09-27)
 
 
