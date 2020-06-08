@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalControls", "Termina
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandHandler", "CommandHandler\CommandHandler.csproj", "{F3734666-0ACA-4CDC-B1B1-CD955FB6B4A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization", "Localization\Localization.csproj", "{8963C533-54EB-46E9-BC55-CC1A01DAAFDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{F3734666-0ACA-4CDC-B1B1-CD955FB6B4A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3734666-0ACA-4CDC-B1B1-CD955FB6B4A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3734666-0ACA-4CDC-B1B1-CD955FB6B4A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8963C533-54EB-46E9-BC55-CC1A01DAAFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8963C533-54EB-46E9-BC55-CC1A01DAAFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8963C533-54EB-46E9-BC55-CC1A01DAAFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8963C533-54EB-46E9-BC55-CC1A01DAAFDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
