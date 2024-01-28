@@ -10,6 +10,7 @@ using Sisk.Utils.Net.Wrapper;
 // ReSharper disable MergeCastWithTypeCheck
 
 namespace Sisk.Utils.Net {
+
     /// <summary>
     ///     A class that handles networking.
     /// </summary>
@@ -30,13 +31,8 @@ namespace Sisk.Utils.Net {
             _id = id;
 
             Register<EntityMessage>(OnEntityMessageReceived);
-            MyAPIGateway.Multiplayer.RegisterMessageHandler(_id, OnMessageReceived);
+            MyAPIGateway.Multiplayer.RegisterSecureMessageHandler(_id, OnMessageReceived);
         }
-
-        /// <summary>
-        ///     Indicates if networking is active.
-        /// </summary>
-        private bool Active => MyAPIGateway.Multiplayer.MultiplayerActive;
 
         /// <summary>
         ///     Indicates if this is a client.
@@ -59,10 +55,15 @@ namespace Sisk.Utils.Net {
         public ulong MyId => MyAPIGateway.Multiplayer.MyId;
 
         /// <summary>
+        ///     Indicates if networking is active.
+        /// </summary>
+        private bool Active => MyAPIGateway.Multiplayer.MultiplayerActive;
+
+        /// <summary>
         ///     Close all network connections and close gracefully.
         /// </summary>
         public void Close() {
-            MyAPIGateway.Multiplayer.UnregisterMessageHandler(_id, OnMessageReceived);
+            MyAPIGateway.Multiplayer.UnregisterSecureMessageHandler(_id, OnMessageReceived);
             Unregister<EntityMessage>(OnEntityMessageReceived);
         }
 
@@ -245,7 +246,7 @@ namespace Sisk.Utils.Net {
             }
         }
 
-        private void OnMessageReceived(byte[] bytes) {
+        private void OnMessageReceived(ushort id, byte[] bytes, ulong sender, bool reliable) {
             var wrapper = MyAPIGateway.Utilities.SerializeFromBinary<MessageWrapper>(bytes);
 
             if (_messageHandler.ContainsKey(wrapper.Type)) {
