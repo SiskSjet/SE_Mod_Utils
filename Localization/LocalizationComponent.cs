@@ -7,17 +7,15 @@ using VRage;
 using VRage.Game.Components;
 
 namespace Sisk.Utils.Localization {
+
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public sealed class LocalizationComponent : MySessionComponentBase {
+
         /// <summary>
         ///     Create a new instance of this component.
         /// </summary>
         public LocalizationComponent() {
-            if (Default == null) {
-                Default = this;
-            } else {
-                throw new Exception("Only one instance of BvMain can exist at any given time.");
-            }
+            Default = this;
         }
 
         /// <summary>
