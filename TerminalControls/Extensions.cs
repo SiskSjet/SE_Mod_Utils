@@ -10,7 +10,9 @@ using VRageMath;
 // ReSharper disable ImplicitlyCapturedClosure
 
 namespace Sisk.Utils.TerminalControls {
+
     public static class Extensions {
+
         public static IMyTerminalAction CreateButtonAction<TBlock>(this IMyTerminalControlButton button) where TBlock : IMyTerminalBlock {
             return CreateButtonAction<TBlock>(button, TerminalActionIcons.TOGGLE);
         }
@@ -30,7 +32,7 @@ namespace Sisk.Utils.TerminalControls {
         }
 
         public static IMyTerminalAction CreateDecreaseAction<TBlock>(this IMyTerminalControlSlider slider, float step, Func<IMyTerminalBlock, float> min, Func<IMyTerminalBlock, float> max, string iconPath) where TBlock : IMyTerminalBlock {
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Decrease" + ((IMyTerminalControl) slider).Id);
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Decrease" + ((IMyTerminalControl)slider).Id);
             action.Name = Combine(MySpaceTexts.ToolbarAction_Decrease, slider.Title);
             action.Action = block => slider.Setter(block, MathHelper.Clamp(slider.Getter(block) - max(block) * step, min(block), max(block)));
             action.Writer = slider.Writer;
@@ -45,7 +47,7 @@ namespace Sisk.Utils.TerminalControls {
         }
 
         public static IMyTerminalAction CreateIncreaseAction<TBlock>(this IMyTerminalControlSlider slider, float step, Func<IMyTerminalBlock, float> min, Func<IMyTerminalBlock, float> max, string iconPath) where TBlock : IMyTerminalBlock {
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Increase" + ((IMyTerminalControl) slider).Id);
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Increase" + ((IMyTerminalControl)slider).Id);
             action.Name = Combine(MySpaceTexts.ToolbarAction_Increase, slider.Title);
             action.Action = block => slider.Setter(block, MathHelper.Clamp(slider.Getter(block) + max(block) * step, min(block), max(block)));
             action.Writer = slider.Writer;
@@ -56,7 +58,7 @@ namespace Sisk.Utils.TerminalControls {
         }
 
         public static IMyTerminalAction CreateOffAction<TBlock>(this IMyTerminalControlOnOffSwitch @switch) where TBlock : IMyTerminalBlock {
-            return @switch.CreateOffAction<TBlock>(TerminalActionIcons.OFF);
+            return @switch.CreateOffAction<TBlock>(TerminalActionIcons.SWITCH_OFF);
         }
 
         public static IMyTerminalAction CreateOffAction<TBlock>(this IMyTerminalControlOnOffSwitch @switch, string iconPath) where TBlock : IMyTerminalBlock {
@@ -64,7 +66,7 @@ namespace Sisk.Utils.TerminalControls {
             var offText = MyTexts.Get(@switch.OffText);
             var name = GetTitle(@switch.Title).Append(" ").Append(offText);
 
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl) @switch).Id + "_Off");
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl)@switch).Id + "_Off");
             action.Name = name;
 
             action.Action = block => @switch.Setter(block, false);
@@ -76,7 +78,7 @@ namespace Sisk.Utils.TerminalControls {
         }
 
         public static IMyTerminalAction CreateOnAction<TBlock>(this IMyTerminalControlOnOffSwitch @switch) where TBlock : IMyTerminalBlock {
-            return @switch.CreateOnAction<TBlock>(TerminalActionIcons.ON);
+            return @switch.CreateOnAction<TBlock>(TerminalActionIcons.SWITCH_ON);
         }
 
         public static IMyTerminalAction CreateOnAction<TBlock>(this IMyTerminalControlOnOffSwitch @switch, string iconPath) where TBlock : IMyTerminalBlock {
@@ -84,7 +86,7 @@ namespace Sisk.Utils.TerminalControls {
             var offText = MyTexts.Get(@switch.OffText);
             var name = GetTitle(@switch.Title).Append(" ").Append(onText);
 
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl) @switch).Id + "_On");
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl)@switch).Id + "_On");
             action.Name = name;
 
             action.Action = block => @switch.Setter(block, true);
@@ -112,7 +114,7 @@ namespace Sisk.Utils.TerminalControls {
         }
 
         public static IMyTerminalAction CreateResetAction<TBlock>(this IMyTerminalControlSlider slider, Func<IMyTerminalBlock, float> defaultValue, string iconPath) where TBlock : IMyTerminalBlock {
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Reset" + ((IMyTerminalControl) slider).Id);
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>("Reset" + ((IMyTerminalControl)slider).Id);
             action.Name = Combine(MySpaceTexts.ToolbarAction_Reset, slider.Title);
             action.Action = block => slider.Setter(block, defaultValue(block));
             action.Writer = slider.Writer;
@@ -135,7 +137,7 @@ namespace Sisk.Utils.TerminalControls {
             var offText = MyTexts.Get(@switch.OffText);
             var name = GetTitle(@switch.Title).Append(" ").Append(onText).Append("/").Append(offText);
 
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl) @switch).Id);
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl)@switch).Id);
             action.Name = name;
 
             action.Action = block => @switch.Setter(block, !@switch.Getter(block));
@@ -151,7 +153,7 @@ namespace Sisk.Utils.TerminalControls {
             var offText = MyTexts.Get(checkbox.OffText);
             var name = GetTitle(checkbox.Title).Append(" ").Append(onText).Append("/").Append(offText);
 
-            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl) checkbox).Id);
+            var action = MyAPIGateway.TerminalControls.CreateAction<TBlock>(((IMyTerminalControl)checkbox).Id);
             action.Name = name;
 
             action.Action = block => checkbox.Setter(block, !checkbox.Getter(block));
@@ -173,11 +175,11 @@ namespace Sisk.Utils.TerminalControls {
         }
 
         private static IMyTerminalControlProperty<TValue> CreateProperty<TBlock, TValue>(this IMyTerminalValueControl<TValue> control) where TBlock : IMyTerminalBlock {
-            var property = MyAPIGateway.TerminalControls.CreateProperty<TValue, TBlock>(((IMyTerminalControl) control).Id);
+            var property = MyAPIGateway.TerminalControls.CreateProperty<TValue, TBlock>(((IMyTerminalControl)control).Id);
             property.Getter = control.Getter;
             property.Setter = control.Setter;
             property.SupportsMultipleBlocks = false;
-            property.Enabled = ((IMyTerminalControl) control).Enabled;
+            property.Enabled = ((IMyTerminalControl)control).Enabled;
 
             return property;
         }
