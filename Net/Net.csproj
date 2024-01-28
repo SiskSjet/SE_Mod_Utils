@@ -1,67 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2285E3A1-63A2-4632-AA74-CAA8DAC96C71}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sisk.Utils.Net</RootNamespace>
-    <AssemblyName>Net</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="ProtoBuf.Net">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\ProtoBuf.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="ProtoBuf.Net.Core">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\ProtoBuf.Net.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Sandbox.Common">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\Sandbox.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="VRage.Game">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Library">
-      <HintPath>C:\Spiele\Steam\steamapps\common\SpaceEngineers\Bin64\VRage.Library.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Delegates\EntityMessageHandler.cs" />
-    <Compile Include="Delegates\MessageHandler.cs" />
-    <Compile Include="Messages\EntityMessage.cs" />
-    <Compile Include="Messages\IEntityMessage.cs" />
-    <Compile Include="Messages\IMessage.cs" />
-    <Compile Include="Network.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wrapper\EntityMessageWrapper.cs" />
-    <Compile Include="Wrapper\MessageHandlerWrapper.cs" />
-    <Compile Include="Wrapper\MessageHandlerWrapperComparer.cs" />
-    <Compile Include="Wrapper\MessageWrapper.cs" />
-    <Compile Include="Wrapper\Wrapper.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Sisk.Utils.Net</RootNamespace>
+		<TargetFramework>net48</TargetFramework>
+		<Platforms>x64</Platforms>
+		<LangVersion>6</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+		<IsPublishable>False</IsPublishable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Mal.Mdk2.ModAnalyzers" Version="2.1.7" />
+		<PackageReference Include="Mal.Mdk2.References" Version="2.1.9" />
+	</ItemGroup>
+
 </Project>
