@@ -41,6 +41,7 @@ namespace Sisk.Utils.Localization {
         /// </summary>
         protected override void UnloadData() {
             MyAPIGateway.Gui.GuiControlRemoved -= OnGuiControlRemoved;
+            Default = null;
         }
 
         /// <summary>
